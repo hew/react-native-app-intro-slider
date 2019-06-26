@@ -11,6 +11,7 @@ import {
   I18nManager,
 } from 'react-native';
 import DefaultSlide from './DefaultSlide';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,9 +28,9 @@ export default class AppIntroSlider extends React.Component {
     dotStyle: {
       backgroundColor: 'rgba(0, 0, 0, .2)',
     },
-    skipLabel: 'Skip',
-    doneLabel: 'Done',
-    nextLabel: 'Next',
+    skipLabel: 'SKIP',
+    doneLabel: 'GET STARTED',
+    nextLabel: 'NEXT',
     prevLabel: 'Back',
     buttonStyle: null,
     buttonTextStyle: null,
@@ -62,13 +63,6 @@ export default class AppIntroSlider extends React.Component {
     this.goToSlide(this.state.activeIndex - 1);
     this.props.onSlideChange &&
       this.props.onSlideChange(this.state.activeIndex - 1, this.state.activeIndex);
-  };
-
-  _onPaginationPress = (index) => {
-    const activeIndexBeforeChange = this.state.activeIndex;
-    this.goToSlide(index);
-    this.props.onSlideChange &&
-      this.props.onSlideChange(index, activeIndexBeforeChange);
   };
 
   _renderItem = item => {
@@ -165,7 +159,7 @@ export default class AppIntroSlider extends React.Component {
                     ? this.props.activeDotStyle
                     : this.props.dotStyle,
                 ]}
-                onPress={() => this._onPaginationPress(i)}
+                onPress={() => this.goToSlide(i)}
               />
             ))}
         </View>
@@ -285,7 +279,8 @@ const styles = StyleSheet.create({
   },
   bottomButton: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, .3)',
+    borderRadius: 4,
+    backgroundColor: 'rgba(0, 0, 0, .8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
